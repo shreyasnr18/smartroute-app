@@ -1,0 +1,53 @@
+[
+  {
+    "route_id": "route_orr_tinfactory",
+    "name": "Via Outer Ring Road & Tin Factory Flyover",
+    "corridor": "ORR -> Ramamurthy Nagar -> Tin Factory -> KR Puram",
+    "distance_km": 13.2,
+    "base_eta_minutes": 38,
+    "current_traffic_level": "Congested",
+    "toll": false,
+    "summary": "Primary high-capacity arterial route directly via Outer Ring Road flyovers.",
+    "steps": [
+      "Head east from Hebbal Flyover onto Outer Ring Road (ORR).",
+      "Pass Manyata Tech Park on the left and continue straight past Veerannapalya.",
+      "Take the Ramamurthy Nagar underpass towards Kasavanahalli / Tin Factory.",
+      "Ascend the Tin Factory Flyover merging towards KR Puram Railway Station.",
+      "Arrive at KR Puram Destination."
+    ]
+  },
+  {
+    "route_id": "route_hennur_kalyannagar",
+    "name": "Via Hennur Main Road & Kalyan Nagar / Ramamurthy Nagar",
+    "corridor": "Hebbal -> Hennur -> Kalyan Nagar -> Ramamurthy Nagar -> KR Puram",
+    "distance_km": 15.1,
+    "base_eta_minutes": 42,
+    "current_traffic_level": "Moderate",
+    "toll": false,
+    "summary": "Secondary corridor avoiding ORR main carriageway by cutting through Kalyan Nagar 80ft road.",
+    "steps": [
+      "Exit Hebbal towards Hennur Cross along outer service loop.",
+      "Turn right onto Hennur Main Road heading south towards Kalyan Nagar.",
+      "Take left at HRBR Layout 80 Feet Road through Kalyan Nagar commercial district.",
+      "Merge onto Ramamurthy Nagar main road connecting to Old Madras Road.",
+      "Cross under KR Puram cable bridge to reach KR Puram Junction."
+    ]
+  },
+  {
+    "route_id": "route_thanisandra_bypass",
+    "name": "Via Thanisandra & Old Madras Road Peripheral Bypass",
+    "corridor": "Hebbal -> Thanisandra -> Narayanapura -> Old Madras Road -> KR Puram",
+    "distance_km": 16.8,
+    "base_eta_minutes": 46,
+    "current_traffic_level": "Free Flow",
+    "toll": false,
+    "summary": "Peripheral ring detour offering wider roads and minimal signals during peak evening rush.",
+    "steps": [
+      "Take northern exit from Hebbal towards Thanisandra Main Road.",
+      "Continue straight past Bhartiya City intersection towards Peripheral Road.",
+      "Turn right at Narayanapura connecting road towards Hoodi / KR Puram back-gate.",
+      "Merge onto Old Madras Road westbound at ITI Colony signal.",
+      "Arrive at KR Puram from the eastern bypass approach."
+    ]
+  }
+]

@@ -1,0 +1,134 @@
+[
+  {
+    "location_id": "P-YPR-001",
+    "address": "Soap Factory Curb, Yeshwantpur",
+    "lat": 13.018,
+    "lng": 77.555,
+    "gap_length_m": 5.4,
+    "last_updated": "2026-07-15T17:20:00.552888+00:00",
+    "curb_side": "North-West Service Road",
+    "detection_confidence": 0.94,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 142)"
+  },
+  {
+    "location_id": "P-YPR-002",
+    "address": "Orion Mall Service Gate Curb, Dr Rajkumar Rd",
+    "lat": 13.0115,
+    "lng": 77.5558,
+    "gap_length_m": 4.1,
+    "last_updated": "2026-07-15T17:20:00.552907+00:00",
+    "curb_side": "West Curb Bay 3",
+    "detection_confidence": 0.91,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 208)"
+  },
+  {
+    "location_id": "P-MAL-003",
+    "address": "Sampige Road Main Curb, Malleshwaram 8th Cross",
+    "lat": 13.0035,
+    "lng": 77.5702,
+    "gap_length_m": 3.6,
+    "last_updated": "2026-07-15T17:20:00.552910+00:00",
+    "curb_side": "East Curb",
+    "detection_confidence": 0.89,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 310)"
+  },
+  {
+    "location_id": "P-MAL-004",
+    "address": "Mantri Square North Lane Parking Bay, Malleshwaram",
+    "lat": 12.9918,
+    "lng": 77.5708,
+    "gap_length_m": 6.2,
+    "last_updated": "2026-07-15T17:20:00.552912+00:00",
+    "curb_side": "North Entrance Curb",
+    "detection_confidence": 0.96,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 415)"
+  },
+  {
+    "location_id": "P-HEB-005",
+    "address": "Hebbal Flyover Service Road East",
+    "lat": 13.036,
+    "lng": 77.591,
+    "gap_length_m": 4.8,
+    "last_updated": "2026-07-15T17:20:00.552914+00:00",
+    "curb_side": "Service Road North Bay",
+    "detection_confidence": 0.92,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 88)"
+  },
+  {
+    "location_id": "P-HEB-006",
+    "address": "Manyata Tech Park Gate 1 Curb, Thanisandra Main Rd",
+    "lat": 13.045,
+    "lng": 77.62,
+    "gap_length_m": 5.8,
+    "last_updated": "2026-07-15T17:20:00.552916+00:00",
+    "curb_side": "Tech Park Frontage Curb",
+    "detection_confidence": 0.95,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 512)"
+  },
+  {
+    "location_id": "P-IND-007",
+    "address": "100 Feet Road Metro Pillar 42 Curb, Indiranagar",
+    "lat": 12.9784,
+    "lng": 77.6408,
+    "gap_length_m": 4.4,
+    "last_updated": "2026-07-15T17:20:00.552918+00:00",
+    "curb_side": "West Curb Lane",
+    "detection_confidence": 0.9,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 176)"
+  },
+  {
+    "location_id": "P-IND-008",
+    "address": "12th Main Road Corner Bay, Indiranagar",
+    "lat": 12.9719,
+    "lng": 77.6412,
+    "gap_length_m": 3.4,
+    "last_updated": "2026-07-15T17:20:00.552920+00:00",
+    "curb_side": "South Curb Bay",
+    "detection_confidence": 0.88,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 230)"
+  },
+  {
+    "location_id": "P-TIN-009",
+    "address": "Tin Factory Bus Bay Outer Curb, KR Puram",
+    "lat": 12.9982,
+    "lng": 77.6605,
+    "gap_length_m": 5.1,
+    "last_updated": "2026-07-15T17:20:00.552922+00:00",
+    "curb_side": "Service Lane West",
+    "detection_confidence": 0.93,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 620)"
+  },
+  {
+    "location_id": "P-TIN-010",
+    "address": "Phoenix Marketcity Frontage Bay, Mahadevapura",
+    "lat": 12.9968,
+    "lng": 77.6954,
+    "gap_length_m": 6.8,
+    "last_updated": "2026-07-15T17:20:00.552924+00:00",
+    "curb_side": "Mall VIP Entrance Curb",
+    "detection_confidence": 0.97,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 740)"
+  },
+  {
+    "location_id": "P-KOR-011",
+    "address": "80 Feet Road Sony World Signal Curb, Koramangala",
+    "lat": 12.9352,
+    "lng": 77.6245,
+    "gap_length_m": 4.6,
+    "last_updated": "2026-07-15T17:20:00.552926+00:00",
+    "curb_side": "East Block 4 Curb",
+    "detection_confidence": 0.91,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 330)"
+  },
+  {
+    "location_id": "P-KOR-012",
+    "address": "Nexus Mall Forum South Gate Curb, Koramangala",
+    "lat": 12.9348,
+    "lng": 77.6112,
+    "gap_length_m": 3.8,
+    "last_updated": "2026-07-15T17:20:00.552928+00:00",
+    "curb_side": "Mall Service Road",
+    "detection_confidence": 0.89,
+    "notes": "Detected via Offline YOLOv8n gap estimation (Frame 490)"
+  }
+]

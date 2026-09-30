@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartRoute — Bengaluru Commuter Route & Show Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">a perfect, safest and fastest journey is being constructed</p>
+        </div>
+    </div>
+
+    <!-- Confirmation Popup Modal (Step 4) -->
+    <div id="confirmModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <h3>Confirm Show Selection</h3>
+            <p id="confirmSummaryText" class="modal-summary-line"></p>
+            <p class="confirm-question">Are you sure you want to proceed with this option?</p>
+            <div class="modal-button-row">
+                <button type="button" id="confirmYesBtn" class="btn primary">Yes, Proceed</button>
+                <button type="button" id="confirmNoBtn" class="btn secondary">No, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mock Checkout Screen Modal (Step 5) -->
+    <div id="checkoutModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card">
+            <h3>Mock Ticket Checkout (Agent 8)</h3>
+            <div id="checkoutSummaryBox" class="checkout-summary-box"></div>
+            <p class="checkout-note">
+                ⚡ <strong>Demo Note:</strong> Real payment and scraping are mocked by design. Clicking 'Simulate Payment Success' confirms ticket reservation and instantly triggers the 5-Agent SmartRoute navigation pipeline to the venue!
+            </p>
+            <div class="modal-button-row vertical-buttons">
+                <button type="button" id="simulatePaymentBtn" class="btn primary full-width-btn">Simulate Payment Success</button>
+                <a id="viewOnBmsLink" href="#" target="_blank" rel="noopener noreferrer" class="btn secondary full-width-btn">View on BookMyShow ↗</a>
+                <button type="button" id="closeCheckoutBtn" class="btn danger-link">Cancel Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <span class="logo-icon">📍</span>
+                <h1>SmartRoute Bengaluru</h1>
+            </div>
+            <p class="subtitle">AI-Powered Intelligent Commuter Navigation & Entertainment Auto-Routing</p>
+            
+            <!-- Feature Mode Tabs -->
+            <div class="tabs-header">
+                <button type="button" id="tabDirectBtn" class="tab-btn active">📍 Direct Route Planner</button>
+                <button type="button" id="tabShowBtn" class="tab-btn">🎬 Show Discovery + Auto-Routing</button>
+                <button type="button" id="tabParkingBtn" class="tab-btn">🚗 Find Parking (Spot-Match)</button>
+                <button type="button" id="btnOpenPrivacyModal" class="tab-btn secondary-tab">🛡️ Privacy & DPDP Rights</button>
+                <button type="button" id="btnOpenParkingReporter" class="tab-btn secondary-tab">📋 Report Parking Spot</button>
+                <button type="button" id="btnOpenAdminManager" class="tab-btn secondary-tab">⚙️ Admin Self-Listing</button>
+            </div>
+        </header>
+
+        <!-- Privacy & DPDP Rights Modal -->
+        <div id="privacyModal" class="modal-backdrop" style="display: none;">
+            <div class="modal-card wide-modal">
+                <h3>🛡️ Compliance & Data Privacy Policy (Agent 0)</h3>
+                <div id="privacyPolicyText" class="privacy-box">
+                    <p>Loading Agent 0 compliance policy...</p>
+                </div>
+                <hr style="margin: 1rem 0; border: none; border-top: 1px solid var(--border-color);">
+                <h4>Right to Erasure (DPDP Act 2023 / GDPR Art. 17)</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Enter your phone/device ID to immediately purge all navigation logs, location history, and profile records across our SQLite and Firebase datastores:</p>
+                <div class="form-grid" style="margin-top: 0.75rem;">
+                    <div class="form-group">
+                        <input type="text" id="deleteUserIdInput" placeholder="Enter Device/User ID (e.g. commuter_9921)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="deleteConfirmInput" placeholder="Type DELETE MY DATA to confirm">
+                    </div>
+                </div>
+                <div class="modal-button-row">
+                    <button type="button" id="btnConfirmDeleteData" class="btn danger-btn">🗑️ Delete All My Data</button>
+                    <button type="button" id="btnClosePrivacyModal" class="btn secondary">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crowdsourced Parking Spot Reporter Modal -->
+        <div id="parkingReporterModal" class="modal-backdrop" style="display: none;">
+            <div class="modal-card">
+                <h3>📋 Crowdsourced Parking Spot Reporter (Agent 10 Sync)</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Spotted an open curb gap or completed an on-device camera measurement? Report it instantly to sync with Firestore real-time shared state (auto-expires in 15 mins):</p>
+                <form id="formReportParking" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Location / Address</label>
+                        <input type="text" id="repAddressInput" placeholder="e.g. 8th Cross, Malleshwaram Curb Bay" required>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Latitude</label>
+                            <input type="number" step="0.0001" id="repLatInput" value="13.0031" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude</label>
+                            <input type="number" step="0.0001" id="repLngInput" value="77.5702" required>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Measured Gap Length (meters)</label>
+                            <input type="number" step="0.1" id="repGapInput" value="4.8" min="2.0" max="15.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Curb Side</label>
+                            <input type="text" id="repCurbSideInput" value="Left Curb (No Parking Restriction Free)">
+                        </div>
+                    </div>
+                    <div class="modal-button-row">
+                        <button type="submit" class="btn primary">Sync Spot to Real-Time Feed</button>
+                        <button type="button" id="btnCloseParkingReporter" class="btn secondary">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Self-Listing Modal -->
+        <div id="adminManagerModal" class="modal-backdrop" style="display: none;">
+            <div class="modal-card wide-modal">
+                <h3>⚙️ Admin Subsystem Self-Listing (Zero Scraping)</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Under Agent 0 guardrails, venues and theatres directly list their own stock via verified admin API rather than relying on fragile/illegal web scraping:</p>
+                <div class="tabs-header" style="margin: 1rem 0;">
+                    <button type="button" id="tabAdminEventBtn" class="tab-btn active">List New Crowd Event (Agent 1)</button>
+                    <button type="button" id="tabAdminShowBtn" class="tab-btn">List New Show Inventory (Agent 6)</button>
+                </div>
+                
+                <form id="formAdminEvent">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Event Name</label>
+                            <input type="text" id="admEventName" placeholder="e.g. Tech Summit Bengaluru" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Venue / Location</label>
+                            <input type="text" id="admEventVenue" placeholder="e.g. BIEC, Tumkur Road" required>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Expected Crowd Size</label>
+                            <input type="number" id="admEventCrowd" value="2500" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Risk Score (1-100)</label>
+                            <input type="number" id="admEventRisk" value="65" min="1" max="100" required>
+                        </div>
+                    </div>
+                    <div class="modal-button-row">
+                        <button type="submit" class="btn primary">Publish Event to Subsystem</button>
+                        <button type="button" class="btn secondary btnCloseAdminModal">Close</button>
+                    </div>
+                </form>
+
+                <form id="formAdminShow" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Show / Movie Title</label>
+                            <input type="text" id="admShowName" placeholder="e.g. Interstellar IMAX Re-release" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Theatre / Venue</label>
+                            <input type="text" id="admShowVenue" placeholder="e.g. PVR Nexus Mall, Koramangala" required>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Ticket Price (₹)</label>
+                            <input type="number" id="admShowPrice" value="450" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tickets Available</label>
+                            <input type="number" id="admShowTickets" value="120" required>
+                        </div>
+                    </div>
+                    <div class="modal-button-row">
+                        <button type="submit" class="btn primary">Publish Show to Inventory</button>
+                        <button type="button" class="btn secondary btnCloseAdminModal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= SECTION 1: DIRECT ROUTE PLANNER ================= -->
+        <div id="directModeContainer">
+            <section class="card form-section">
+                <h2>Where would you like to go?</h2>
+                <form id="routeForm" autocomplete="off">
+                    <div class="form-group autocomplete-wrapper">
+                        <label for="originInput">From (Origin)</label>
+                        <input type="text" id="originInput" placeholder="Start typing Bengaluru location (e.g. Hebbal)..." value="Hebbal" required>
+                        <div id="originDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+                    </div>
+
+                    <div class="form-group autocomplete-wrapper">
+                        <label for="destinationInput">To (Destination)</label>
+                        <input type="text" id="destinationInput" placeholder="Start typing destination (e.g. KR Puram)..." value="KR Puram via Tin Factory" required>
+                        <div id="destinationDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="submit" class="btn primary submit-btn">Find Route</button>
+                        <button type="button" id="simulateRushBtn" class="btn secondary small-btn" title="Simulate 15 concurrent commuters in background to trigger corridor capacity diversion">Simulate Corridor Rush</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- ================= SECTION 2: SHOW DISCOVERY & AUTO-ROUTING ================= -->
+        <div id="showModeContainer" style="display: none;">
+            <section class="card form-section">
+                <h2>Find Shows & Calculate Venue Costs (Agents 6 & 7)</h2>
+                <form id="showSearchForm" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="showNameInput">Show / Movie Name (Optional)</label>
+                            <input type="text" id="showNameInput" placeholder="e.g. Kalki, Zakir Khan, or leave blank for all">
+                        </div>
+                        <div class="form-group">
+                            <label for="showCityInput">City</label>
+                            <input type="text" id="showCityInput" value="Bengaluru" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="showOriginInput">Your Starting Location (Origin)</label>
+                            <input type="text" id="showOriginInput" value="Hebbal" placeholder="e.g. Hebbal, Indiranagar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="budgetInput">Budget per Ticket (₹)</label>
+                            <input type="number" id="budgetInput" value="800" min="100" max="10000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ticketCountInput">Number of Tickets</label>
+                            <input type="number" id="ticketCountInput" value="2" min="1" max="20" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationPrefInput">Location Preference (Optional)</label>
+                            <input type="text" id="locationPrefInput" placeholder="e.g. Malleshwaram / Yeshwantpur">
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>Preferred Screen Type:</label>
+                        <div class="checkbox-options">
+                            <label><input type="checkbox" name="screenType" value="Any" checked> Any</label>
+                            <label><input type="checkbox" name="screenType" value="INOX"> INOX</label>
+                            <label><input type="checkbox" name="screenType" value="PVR"> PVR</label>
+                            <label><input type="checkbox" name="screenType" value="IMAX"> IMAX</label>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="submit" class="btn primary submit-btn">Search Shows & Calculate Costs</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Shows Table Section (Step 2) -->
+            <section id="showsTableSection" class="card table-section" style="display: none;">
+                <h2>Candidate Shows & Venue Proximity</h2>
+                <p class="table-helper">Click any row below to view selection summary and proceed to mock checkout:</p>
+                <div class="table-responsive">
+                    <table id="showsTable">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Location</th>
+                                <th>Mall/Theatre</th>
+                                <th>Distance</th>
+                                <th>Duration</th>
+                                <th>Tickets Available</th>
+                                <th>Price/Ticket</th>
+                                <th>Parking Fee/hr</th>
+                                <th>Total (tickets + BMS fee)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="showsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= SECTION 3: FIND PARKING (SPOT-MATCH) ================= -->
+        <div id="parkingModeContainer" style="display: none;">
+            <section class="card form-section">
+                <h2>Find Dimension-Aware Parking (Spot-Match)</h2>
+                <p class="table-helper">Phase 1 Demo: Select your vehicle model or type license plate to check precomputed curb gaps vs car dimensions (+0.3m safety buffer).</p>
+                <form id="parkingForm" autocomplete="off">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vehicleSelect">Select Vehicle (Agent 9 Profile)</label>
+                            <select id="vehicleSelect" class="dropdown-select">
+                                <option value="maruti_swift">Maruti Suzuki Swift (3.86m x 1.74m - Hatchback)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="customVehicleInput">Or Type License Plate / Keyword</label>
+                            <input type="text" id="customVehicleInput" placeholder="e.g. KA 04 EQ 1234 or Creta...">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group autocomplete-wrapper">
+                            <label for="parkingOriginInput">From (Your Location)</label>
+                            <input type="text" id="parkingOriginInput" placeholder="Start typing location (e.g. Hebbal)..." value="Hebbal" required>
+                            <div id="parkingOriginDropdown" class="autocomplete-dropdown" style="display: none;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="parkingAreaInput">Destination Area / Neighborhood Filter</label>
+                            <input type="text" id="parkingAreaInput" placeholder="e.g. Yeshwantpur, Malleshwaram, Indiranagar (Leave blank for all)..." value="Yeshwantpur">
+                        </div>
+                    </div>
+
+                    <div class="button-row" style="align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                        <button type="submit" class="btn primary submit-btn">Find Fitting Parking Spots</button>
+                        <label class="toggle-checkbox-label" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; cursor: pointer;">
+                            <input type="checkbox" id="showTooTightToggle" style="width: 18px; height: 18px; cursor: pointer;">
+                            <span>Show 'Too Tight' spots in table</span>
+                        </label>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Loading Spinner for Parking Search -->
+            <div id="parkingLoadingSection" class="loading-section" style="display: none;">
+                <div class="spinner"></div>
+                <p class="loading-main-text">Analyzing physical vehicle dimensions against curb gaps...</p>
+                <p class="loading-sub-text">Evaluating length, width, and +0.3m safety buffer across monitored bays</p>
+            </div>
+
+            <!-- Parking Results Table Section -->
+            <section id="parkingResultsSection" class="card form-section" style="display: none;">
+                <div class="result-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <h2>Monitored Curb Parking Gaps (Agent 10 & 11)</h2>
+                    <div id="parkingSummaryBadge" class="badge info-badge"></div>
+                </div>
+                <p class="table-helper">Plain functional table ranking candidate curb spots by fit status and driving distance from origin:</p>
+                
+                <div class="table-responsive">
+                    <table id="parkingTable">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Location / Address</th>
+                                <th>Distance</th>
+                                <th>Duration</th>
+                                <th>Gap Length (m)</th>
+                                <th>Fit Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="parkingTableBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- Selected Spot Confirmation Banner & Hand-off -->
+                <div id="selectedSpotConfirmBox" class="checkout-summary-box" style="display: none; margin-top: 1.5rem; background: var(--bg-tertiary); border-left: 4px solid var(--accent-primary); padding: 1.25rem;">
+                    <h3 style="margin-top: 0; font-size: 1.1rem; color: var(--accent-primary);">Spot Selected for Navigation</h3>
+                    <p id="selectedSpotConfirmText" style="margin: 0.5rem 0 1rem 0; line-height: 1.5; font-size: 0.95rem;"></p>
+                    <div class="button-row">
+                        <button type="button" id="routeToSpotBtn" class="btn primary">Route me to this spot using 5-Agent Pipeline ➔</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= LIVE ROUTE RESULT SECTION (SHARED) ================= -->
+        <section id="resultSection" class="card result-section" style="display: none;">
+            <div class="result-header">
+                <h2>Planned Journey Details</h2>
+                <div id="statusBadge" class="badge"></div>
+            </div>
+            
+            <div class="route-summary">
+                <h3 id="routeName"></h3>
+                <div class="metrics-bar">
+                    <div class="metric-item">
+                        <span class="metric-label">Estimated Time</span>
+                        <span class="metric-value"><strong id="routeEta">--</strong> mins</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Total Distance</span>
+                        <span class="metric-value"><strong id="routeDist">--</strong> km</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Corridor Status</span>
+                        <span class="metric-value" id="corridorLoadStatus">Optimal Flow</span>
+                    </div>
+                </div>
+
+                <!-- Brief explanation why this particular route was chosen -->
+                <div class="why-route-box" id="whyRouteBox">
+                    <h4>💡 Why this route was chosen:</h4>
+                    <p id="routeReason" class="reason-text"></p>
+                    <p id="diversionReasonText" class="diversion-text" style="display: none;"></p>
+                </div>
+
+                <!-- Google Maps Graceful Degradation Banner -->
+                <div id="gmapsFallbackBanner" class="badge danger-badge" style="display: none; margin-top: 1rem; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem;">
+                    ⚠️ <span id="gmapsFallbackText">Live Google Maps data temporarily unavailable. Using cached corridor geometry.</span>
+                </div>
+            </div>
+
+            <!-- Interactive Google Map right below planned routes -->
+            <div class="map-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 0.5rem;">
+                    <h4 style="margin: 0;">Interactive Live Map View</h4>
+                    <button type="button" id="btnToggleLowDataMode" class="btn secondary small-btn">📶 Switch to Low-Data Text Directions</button>
+                </div>
+                <div class="map-container" id="mapContainerBox">
+                    <iframe id="googleMapIframe" src="" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div id="lowDataTextBox" style="display: none; background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                    <h5 style="margin: 0 0 0.5rem 0; color: var(--accent-secondary);">Low-Data Text Directions (Zero Bandwidth Mode)</h5>
+                    <ul id="lowDataStepsList" style="margin: 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.6;"></ul>
+                </div>
+                <div class="google-maps-link-container">
+                    <a id="googleMapsLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn google-maps-btn">
+                        Check out this route on the official Google Maps page ↗
+                    </a>
+                </div>
+            </div>
+
+            <!-- Predictive Checkpoints Guidance (replaces basic turn-by-turn) -->
+            <div class="predictive-checkpoints-section">
+                <div class="checkpoints-header">
+                    <h4>🔮 Predictive Corridor Checkpoints & Dynamic Guidance</h4>
+                    <span class="pulse-badge">Live AI Predictions Active</span>
+                </div>
+                <p class="checkpoints-subtitle">Instead of generic navigation steps, SmartRoute predicts upcoming junction bottlenecks and dynamically prepares alternate diversion routes before you get stuck in traffic.</p>
+                <div id="checkpointsTimeline" class="checkpoints-timeline"></div>
+                <ol id="stepsList" class="steps-list" style="display: none;"></ol>
+            </div>
+        </section>
+
+        <!-- Simulation Rush Notification Card -->
+        <section id="simulationSection" class="card simulation-section" style="display: none;">
+            <h2>Corridor Saturation & Diversion Verified</h2>
+            <p id="simSummaryText" class="sim-summary"></p>
+        </section>
+
+        <!-- Mobile QR Code Panel -->
+        <section class="card qr-section">
+            <h2>Mobile Access QR Code</h2>
+            <p>Scan this QR code with your mobile camera to open SmartRoute instantly on your phone over Wi-Fi:</p>
+            <div class="qr-container">
+                <img id="qrImage" src="/qrcode" alt="QR Code to Open SmartRoute on Mobile Phone">
+            </div>
+        </section>
+
+        <footer>
+            <p>SmartRoute Bengaluru — Intelligent Multi-Agent Traffic Navigation & Entertainment Discovery</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

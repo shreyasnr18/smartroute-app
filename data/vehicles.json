@@ -1,0 +1,65 @@
+[
+  {
+    "vehicle_id": "maruti_swift",
+    "make": "Maruti Suzuki",
+    "model": "Swift",
+    "length_m": 3.86,
+    "width_m": 1.74,
+    "type": "Hatchback",
+    "sample_plates": ["KA 04 EQ 1234", "KA 01 AB 9988", "SWIFT"]
+  },
+  {
+    "vehicle_id": "tata_tiago",
+    "make": "Tata Motors",
+    "model": "Tiago EV",
+    "length_m": 3.77,
+    "width_m": 1.68,
+    "type": "Hatchback",
+    "sample_plates": ["KA 03 EV 4321", "KA 05 CD 3344", "TIAGO"]
+  },
+  {
+    "vehicle_id": "tata_nexon",
+    "make": "Tata Motors",
+    "model": "Nexon",
+    "length_m": 3.99,
+    "width_m": 1.80,
+    "type": "Compact SUV",
+    "sample_plates": ["KA 51 NX 7788", "KA 02 MN 1122", "NEXON"]
+  },
+  {
+    "vehicle_id": "hyundai_creta",
+    "make": "Hyundai",
+    "model": "Creta",
+    "length_m": 4.33,
+    "width_m": 1.79,
+    "type": "Mid-size SUV",
+    "sample_plates": ["KA 05 CR 5566", "KA 53 HY 8899", "CRETA"]
+  },
+  {
+    "vehicle_id": "honda_city",
+    "make": "Honda",
+    "model": "City",
+    "length_m": 4.58,
+    "width_m": 1.75,
+    "type": "Sedan",
+    "sample_plates": ["KA 01 HC 2233", "KA 04 CT 6677", "CITY"]
+  },
+  {
+    "vehicle_id": "mahindra_xuv700",
+    "make": "Mahindra",
+    "model": "XUV700",
+    "length_m": 4.69,
+    "width_m": 1.89,
+    "type": "Full-size SUV",
+    "sample_plates": ["KA 04 XU 7000", "KA 19 MH 4455", "XUV700"]
+  },
+  {
+    "vehicle_id": "toyota_innova",
+    "make": "Toyota",
+    "model": "Innova Crysta",
+    "length_m": 4.74,
+    "width_m": 1.85,
+    "type": "MPV",
+    "sample_plates": ["KA 03 IN 9000", "KA 01 TY 7711", "INNOVA"]
+  }
+]

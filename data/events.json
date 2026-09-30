@@ -1,0 +1,41 @@
+[
+  {
+    "id": "event_ipl_tin_factory",
+    "name": "Bengaluru T20 Evening Match & Fan Park",
+    "venue": "Phoenix Marketcity & Tin Factory Grounds, KR Puram",
+    "lat": 12.9982,
+    "lng": 77.6965,
+    "start_time": "18:00",
+    "end_time": "22:00",
+    "expected_crowd_size": 25000,
+    "affected_corridors": ["route_orr_tinfactory"],
+    "risk_score": 75,
+    "description": "Heavy crowd dispersal and parking queues expected near Tin Factory junction and KR Puram Metro station."
+  },
+  {
+    "id": "event_tech_summit_hebbal",
+    "name": "Global AI & Cloud Innovation Summit 2026",
+    "venue": "Manyata Tech Park Convention Center, Hebbal ORR",
+    "lat": 13.0487,
+    "lng": 77.6200,
+    "start_time": "09:00",
+    "end_time": "18:30",
+    "expected_crowd_size": 12000,
+    "affected_corridors": ["route_orr_tinfactory", "route_thanisandra_bypass"],
+    "risk_score": 45,
+    "description": "Evening exit rush from Manyata Tech Park gates onto Outer Ring Road service road."
+  },
+  {
+    "id": "event_hennur_flea_market",
+    "name": "Hennur Weekend Cultural & Food Festival",
+    "venue": "Hennur Cross Arena",
+    "lat": 13.0285,
+    "lng": 77.6398,
+    "start_time": "16:00",
+    "end_time": "21:00",
+    "expected_crowd_size": 4500,
+    "affected_corridors": ["route_hennur_kalyannagar"],
+    "risk_score": 25,
+    "description": "Moderate localized pedestrian traffic around Hennur Main Road signal."
+  }
+]

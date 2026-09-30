@@ -1,0 +1,11 @@
+{
+  "CAPACITY_THRESHOLD": 10,
+  "TIME_BUCKET_MINUTES": 15,
+  "USE_MOCK_TRAFFIC": true,
+  "USE_MOCK_LLM": true,
+  "GOOGLE_MAPS_API_KEY": "",
+  "GEMINI_API_KEY": "",
+  "DB_PATH": "smartroute.db",
+  "HOST": "127.0.0.1",
+  "PORT": 8000
+}
